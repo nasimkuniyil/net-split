@@ -3,7 +3,7 @@
 
 @layer base {
   body {
-    @apply bg-neutral-50;
+    @apply bg-neutral-50 selection:bg-emerald-500 selection:text-white;
     font-family: "Mulish", sans-serif;
     font-weight: 400;
     font-style: normal;
