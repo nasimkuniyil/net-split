@@ -19,7 +19,7 @@ export default function Layout() {
           </div>
         </div>
       </header>
-      <main className="max-w-6xl mx-auto min-h-screen">
+      <main className="max-w-6xl mx-auto min-h-screen py-6">
         <Outlet />
       </main>
       <footer className="border-t border-neutral-200 bg-white">
