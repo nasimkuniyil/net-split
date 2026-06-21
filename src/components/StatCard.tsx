@@ -1,4 +1,4 @@
-import { IndianRupee } from "lucide-react"
+import { IndianRupee, Users2 } from "lucide-react"
 
 
 const STAT_CARD_COLORS = {
@@ -24,20 +24,38 @@ const STAT_CARD_COLORS = {
     },
 } as const
 
+const STAT_CARD_TYPE = {
+    expense: {
+        title: "Total Expenses",
+        icon: IndianRupee,
+    },
+
+    friend: {
+        title: "Total Friends",
+        icon: Users2,
+    }
+} as const;
+
 interface IStatCard {
     amount?: number;
-    color?: keyof typeof STAT_CARD_COLORS
+    color?: keyof typeof STAT_CARD_COLORS;
+    type?: keyof typeof STAT_CARD_TYPE
 }
 
-function StatCard({ amount, color = "default" }: IStatCard) {
+function StatCard({ amount, color = "default", type = "expense" }: IStatCard) {
+    const theme = STAT_CARD_COLORS[color];
+    const typeConfig = STAT_CARD_TYPE[type];
+
+    const IconComponent = typeConfig.icon;
+
     return (
-        <div className={`flex gap-3 items-center p-3 rounded ${STAT_CARD_COLORS[color].bg}`}>
-            <div className={`p-2 rounded-lg ${STAT_CARD_COLORS[color].bgDark} ${STAT_CARD_COLORS[color].text}`}>
-                <IndianRupee />
+        <div className={`flex gap-3 items-center p-3 rounded ${theme.bg}`}>
+            <div className={`p-2 rounded-lg ${theme.bgDark} ${theme.text}`}>
+                <IconComponent/>
             </div>
             <div>
-                <p className={`text-sm text-neutral-600`}>Total Expences:</p>
-                <p className={`text-lg ${STAT_CARD_COLORS[color].text} font-bold mt-1`}>{amount || 0}</p>
+                <p className={`text-sm text-neutral-600`}>{typeConfig.title}:</p>
+                <p className={`text-lg ${theme.text} font-bold mt-1`}>{amount || 0}</p>
             </div>
         </div>
     )
