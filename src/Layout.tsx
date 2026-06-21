@@ -19,30 +19,30 @@ export default function Layout() {
           </div>
         </div>
       </header>
-      <main className="max-w-6xl mx-auto min-h-screen py-6">
+      <main className="max-w-6xl mx-auto min-h-screen py-6 px-4">
         <Outlet />
       </main>
       <footer className="border-t border-neutral-200 bg-white">
         <div className="max-w-6xl mx-auto  py-8 px-4 ">
           <div className="flex justify-between items-center">
-            {env.showDigitalHeroes ? (
+            {!env.showDigitalHeroes ? (
               <>
                 <div>
                   <h3 className="font-semibold">Muhammed Nasim K</h3>
-                  <ActionLink href="mailto:md.nasimkuniyil@gmail.com" >md.nasimkuniyil@gmail.com</ActionLink>
+                  <ActionLink href="mailto:md.nasimkuniyil@gmail.com" underline light newPage>md.nasimkuniyil@gmail.com</ActionLink>
                 </div>
                 <div>
-                  <ActionLink href="https://digitalheroesco.com/" fill>Built for Digital Heroes</ActionLink>
+                  <ActionLink href="https://digitalheroesco.com/" fill newPage>Built for Digital Heroes</ActionLink>
                 </div>
               </>
             ) : (
               <>
                 <div>
-                  <ActionLink href="https://nasimkuniyil.in">nasimkuniyil</ActionLink>
+                  <ActionLink href="https://nasimkuniyil.in" underline light newPage>by nasimkuniyil</ActionLink>
                 </div>
                 <div className="space-x-4">
-                  <ActionLink href="https://github.com/nasimkuniyil">Github</ActionLink>
-                  <ActionLink href="https://linkedin.com/in/nasimkuniyil">Linkedin</ActionLink>
+                  <ActionLink href="https://github.com/nasimkuniyil" underline light newPage>Github</ActionLink>
+                  <ActionLink href="https://linkedin.com/in/nasimkuniyil" underline light newPage>Linkedin</ActionLink>
                 </div>
               </>
             )}
