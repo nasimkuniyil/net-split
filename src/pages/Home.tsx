@@ -7,7 +7,7 @@ import { useState } from "react";
 import CreateBook from "../components/CreateBook";
 
 export default function Home() {
-    const [isOpen, setIsOpen] = useState<boolean>(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     return (
         <>
             <Modal title={"Create new book"} isOpen={isOpen} closeModal={() => setIsOpen(false)}>
@@ -21,17 +21,17 @@ export default function Home() {
                 <div>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 
-                        <ActionLink href={`/expense-books/`}>
+                        <ActionLink href={`/books/123`}>
                             <Tile title={"Weekend Ride"}>
                                 <StatCard amount={2500} />
                             </Tile>
                         </ActionLink>
-                        <ActionLink href={`/expense-books/`}>
+                        <ActionLink href={`/books/124`}>
                             <Tile title={"Hostel Food"}>
                                 <StatCard amount={1750} />
                             </Tile>
                         </ActionLink>
-                        <ActionLink href={`/expense-books/`}>
+                        <ActionLink href={`/books/125`}>
                             <Tile title={"Goa Trip"}>
                                 <StatCard amount={5000} />
                             </Tile>
