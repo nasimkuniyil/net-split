@@ -2,34 +2,44 @@ import Button from "../components/Button";
 import Tile from "../components/Tile";
 import ActionLink from "../components/ActionLink";
 import StatCard from "../components/StatCard";
+import Modal from "../components/Modal";
+import { useState } from "react";
+import CreateBook from "../components/CreateBook";
 
 export default function Home() {
+    const [isOpen, setIsOpen] = useState<boolean>(true);
     return (
-        <div>
-            <div className="text-end mb-5">
-                <Button>Create New Book</Button>
-            </div>
+        <>
+            <Modal title={"Create new book"} isOpen={isOpen} closeModal={() => setIsOpen(false)}>
+                <CreateBook />
+            </Modal>
+
             <div>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <div className="text-end mb-5">
+                    <Button handleClick={() => setIsOpen(true)}>Create New Book</Button>
+                </div>
+                <div>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 
-                    <ActionLink href={`/expense-books/`}>
-                        <Tile title={"Weekend Ride"}>
-                            <StatCard amount={2500} />
-                        </Tile>
-                    </ActionLink>
-                    <ActionLink href={`/expense-books/`}>
-                        <Tile title={"Hostel Food"}>
-                            <StatCard amount={1750} />
-                        </Tile>
-                    </ActionLink>
-                    <ActionLink href={`/expense-books/`}>
-                        <Tile title={"Goa Trip"}>
-                            <StatCard amount={5000} />
-                        </Tile>
-                    </ActionLink>
+                        <ActionLink href={`/expense-books/`}>
+                            <Tile title={"Weekend Ride"}>
+                                <StatCard amount={2500} />
+                            </Tile>
+                        </ActionLink>
+                        <ActionLink href={`/expense-books/`}>
+                            <Tile title={"Hostel Food"}>
+                                <StatCard amount={1750} />
+                            </Tile>
+                        </ActionLink>
+                        <ActionLink href={`/expense-books/`}>
+                            <Tile title={"Goa Trip"}>
+                                <StatCard amount={5000} />
+                            </Tile>
+                        </ActionLink>
 
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
