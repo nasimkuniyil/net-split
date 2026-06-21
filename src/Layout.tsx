@@ -25,7 +25,7 @@ export default function Layout() {
       <footer className="border-t border-neutral-200 bg-white">
         <div className="max-w-6xl mx-auto  py-8 px-4 ">
           <div className="flex justify-between items-center">
-            {!env.showDigitalHeroes ? (
+            {env.showDigitalHeroes ? (
               <>
                 <div>
                   <h3 className="font-semibold">Muhammed Nasim K</h3>
