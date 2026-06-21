@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Tile from "../components/Tile";
-import { IndianRupee } from "lucide-react";
 import ActionLink from "../components/ActionLink";
 import StatCard from "../components/StatCard";
 
