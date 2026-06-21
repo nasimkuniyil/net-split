@@ -7,7 +7,7 @@ interface ITile {
 
 export default function Tile({ children, title }: ITile) {
     return (
-        <div className="p-6 bg-white w-full h-full max-w-3xl border border-neutral-200 shadow-xs rounded-lg">
+        <div className="p-6 bg-white w-full h-full border border-neutral-200 shadow-xs rounded-lg">
             <div className="mb-3">
                 <h3 className="md:text-lg font-bold">{title || "Title"}</h3>
             </div>
