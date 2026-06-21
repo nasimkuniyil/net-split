@@ -29,7 +29,7 @@ function Modal({ title, isOpen, closeModal, children }: IModal) {
         <div className="fixed inset-0 px-4 bg-gray-600/50" onClick={closeModal}>
             <div className="h-full w-full flex justify-center items-center">
                 <div className="bg-white px-4  py-6 md:px-8 md:py-10 rounded w-full max-w-lg" onClick={e => e.stopPropagation()}>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mb-8">
                         <h3 className="font-bold text-lg">{title}</h3>
                         <Button outline handleClick={closeModal}><X/></Button>
                     </div>
