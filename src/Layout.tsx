@@ -23,11 +23,11 @@ export default function Layout() {
         <Outlet />
       </main>
       <footer className="border-t border-neutral-200 bg-white">
-        <div className="max-w-6xl mx-auto  py-8 px-4 ">
-          <div className="flex justify-between items-center">
+        <div className="max-w-6xl mx-auto  py-6 px-4 ">
+          <div className="flex flex-col sm:flex-row text-center sm:text-start sm:justify-between items-center ">
             {env.showDigitalHeroes ? (
               <>
-                <div>
+                <div className="mb-5">
                   <h3 className="font-semibold">Muhammed Nasim K</h3>
                   <ActionLink href="mailto:md.nasimkuniyil@gmail.com" underline light newPage>md.nasimkuniyil@gmail.com</ActionLink>
                 </div>
