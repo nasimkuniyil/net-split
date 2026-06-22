@@ -1,10 +1,10 @@
-import { IndianRupee, Users2 } from "lucide-react"
+import { HandCoins, IndianRupee, Users2 } from "lucide-react"
 
 
 const STAT_CARD_COLORS = {
     default: {
         bg: "bg-neutral-50",
-        bgDark: "bg-neutral-200",
+        bgDark: "bg-neutral-100",
         text: "text-neutral-500"
     },
     red: {
@@ -14,13 +14,18 @@ const STAT_CARD_COLORS = {
     },
     green: {
         bg: "bg-emerald-50",
-        bgDark: "bg-emerald-200",
+        bgDark: "bg-emerald-100",
         text: "text-emerald-500"
     },
     blue: {
         bg: "bg-blue-50",
-        bgDark: "bg-blue-200",
+        bgDark: "bg-blue-100",
         text: "text-blue-500"
+    },
+    purple: {
+        bg: "bg-purple-50",
+        bgDark: "bg-purple-100",
+        text: "text-purple-500"
     },
 } as const
 
@@ -33,6 +38,10 @@ const STAT_CARD_TYPE = {
     friend: {
         title: "Total Friends",
         icon: Users2,
+    },
+    receivable: {
+        title: "Total Owed to You",
+        icon: HandCoins,
     }
 } as const;
 
@@ -51,11 +60,11 @@ function StatCard({ amount, color = "default", type = "expense" }: IStatCard) {
     return (
         <div className={`flex gap-3 items-center p-3 rounded ${theme.bg}`}>
             <div className={`p-2 rounded-lg ${theme.bgDark} ${theme.text}`}>
-                <IconComponent/>
+                <IconComponent />
             </div>
             <div>
                 <p className={`text-sm text-neutral-600`}>{typeConfig.title}:</p>
-                <p className={`text-lg ${theme.text} font-bold mt-1`}>{amount || 0}</p>
+                <h2 className={`text-xl ${theme.text} font-bold mt-1`}>{amount || 0}</h2>
             </div>
         </div>
     )
