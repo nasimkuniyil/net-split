@@ -75,7 +75,7 @@ export default function BookDetails() {
                         <div className="grid gap-3 lg:grid-cols-3 w-full">
                             <StatCard color="green" amount={totalExpense} />
                             <StatCard color="blue" type="friend" amount={book.friends.length} />
-                            <StatCard color="purple" type="receivable" amount={0} />
+                            <StatCard color="purple" type="receivable" amount={book.expenses.length} />
                         </div>
                     </Tile>
                 </section>
@@ -133,11 +133,13 @@ export default function BookDetails() {
                                                         expense
                                                     )
                                                 }
-                                                onDelete={() =>
+                                                onDelete={(e) => {
+                                                    e.stopPropagation()
                                                     deleteExpense(
                                                         book.id,
                                                         expense.id
                                                     )
+                                                }
                                                 }
                                             />
                                         );

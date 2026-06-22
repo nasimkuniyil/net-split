@@ -6,7 +6,7 @@ interface ExpenseListProps {
     paidByName: string;
 
     onEdit: () => void;
-    onDelete: () => void;
+    onDelete: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function ExpenseList({
@@ -16,7 +16,8 @@ export default function ExpenseList({
     onDelete,
 }: ExpenseListProps) {
     return (
-        <div className="group p-5 rounded bg-neutral-50 flex justify-between cursor-pointer">
+        <div className="group p-5 rounded bg-neutral-50 flex justify-between cursor-pointer"
+            onClick={onEdit}>
             <div className="w-full">
                 <h3 className="text-lg font-bold text-neutral-600">
                     {expense.title}
@@ -40,13 +41,7 @@ export default function ExpenseList({
                 </div>
             </div>
 
-            <div className="flex gap-3 items-center text-neutral-500 opacity-0 group-hover:opacity-100 transition">
-                <PenLine
-                    size={18}
-                    onClick={onEdit}
-                    className="hover:text-blue-500"
-                />
-
+            <div className="flex gap-3 items-center text-neutral-500 opacity-100 lg:opacity-0 group-hover:opacity-100 transition">
                 <Trash2
                     size={18}
                     onClick={onDelete}

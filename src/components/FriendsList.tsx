@@ -18,18 +18,13 @@ export default function FriendsList({
     onDelete,
 }: FriendsListProps) {
     return (
-        <div className="group p-4 rounded bg-neutral-50 flex justify-between items-center">
+        <div className="group p-4 rounded bg-neutral-50 flex justify-between items-center cursor-pointer"
+            onClick={onEdit}>
             <p className="font-medium">
                 {friend.name}
             </p>
 
-            <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition">
-                <PenLine
-                    size={18}
-                    onClick={onEdit}
-                    className="cursor-pointer hover:text-blue-500"
-                />
-
+            <div className=" flex gap-3 opacity-100 lg:opacity-0 group-hover:opacity-100 transition">
                 <Trash2
                     size={18}
                     onClick={onDelete}
