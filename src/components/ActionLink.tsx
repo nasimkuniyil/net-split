@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react'
+import { Link } from 'react-router';
 
 interface IActionLink {
     children: ReactNode;
@@ -15,13 +16,13 @@ const ACTION_LINK_STYLE = {
 
 export default function ActionLink({ children, href, fill, newPage, underline, light }: IActionLink) {
     return (
-        <a
-            href={href}
+        <Link
+            to={href}
             className={`cursor-pointer duration-100 ${light && "text-neutral-500"} ${fill && ACTION_LINK_STYLE.fill} ${underline && "hover:underline "}`}
             target={newPage ? '_blank' : undefined}
             rel={newPage ? 'noreferrer noopener' : undefined}
         >
             {children}
-        </a>
+        </Link>
     )
 }
