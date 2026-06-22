@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useExpenseStore } from "../store/expenseStore";
 import Button from "./Button";
+import InputField from "./InputField";
 
 interface EditBookProps {
     bookId: string;
@@ -45,35 +46,17 @@ export default function EditBook({
             onSubmit={handleSubmit}
             className="space-y-4"
         >
-            <div>
-                <label className="font-medium">
-                    Title
-                </label>
 
-                <input
-                    value={name}
-                    onChange={(e) =>
-                        setName(e.target.value)
-                    }
-                    className="w-full border px-3 py-2 rounded"
-                    autoFocus
-                />
-            </div>
+            <InputField placeholder="eg: Weekend Ride" autofocus value={name} title="Title" handleChange={(e) => setName(e.target.value)} />
 
-            <div>
-                <label className="font-medium">
-                    Description
-                </label>
+            <div className="flex flex-col gap-2 mx-auto mb-4">
+                <label className="text-nowrap font-medium text-neutral-700">Description</label>
 
                 <textarea
                     value={description}
-                    onChange={(e) =>
-                        setDescription(
-                            e.target.value
-                        )
-                    }
+                    onChange={(e) => setDescription(e.target.value)}
                     rows={3}
-                    className="w-full border px-3 py-2 rounded"
+                    className="w-full border border-neutral-300 px-3 py-1.5 rounded focus:outline-1 focus:outline-emerald-500 placeholder:text-neutral-400"
                 />
             </div>
 

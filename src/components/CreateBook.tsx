@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { type CreateBookData, useExpenseStore } from "../store/expenseStore";
 import Button from "./Button";
+import InputField from "./InputField";
 
 const initialFormState: CreateBookData = {
     name: "",
@@ -22,19 +23,7 @@ export default function CreateBook({ onSuccess }: { onSuccess: () => void }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-2 mx-auto mb-4">
-                <label className="text-nowrap font-medium text-neutral-700">Title</label>
-                <input
-                    type="text"
-                    value={data.name}
-                    onChange={(e) => setData(prev => ({ ...prev, name: e.target.value }))}
-                    name="name"
-                    className="w-full border border-neutral-300 px-3 py-1.5 rounded focus:outline-1 focus:outline-emerald-500 placeholder:text-neutral-400"
-                    placeholder="Weekend Ride"
-                    autoFocus
-                    required
-                />
-            </div>
+            <InputField placeholder="eg: Weekend Ride" autofocus value={data.name} title="name" handleChange={(e) => setData(prev => ({ ...prev, name: e.target.value }))} />
 
             <div className="flex flex-col gap-2 mx-auto mb-4">
                 <label className="text-nowrap font-medium text-neutral-700">Description</label>

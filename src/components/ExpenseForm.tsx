@@ -2,6 +2,7 @@ import { FormEvent, useMemo, useState } from "react";
 import Button from "./Button";
 import { useExpenseStore } from "../store/expenseStore";
 import type { Expense } from "../types";
+import InputField from "./InputField";
 
 interface ExpenseFormProps {
     bookId: string;
@@ -52,7 +53,7 @@ export default function ExpenseForm({
     const [participants, setParticipants] =
         useState<string[]>(
             initialData?.participants ??
-                friendIds
+            friendIds
         );
 
     if (!book) return null;
@@ -63,8 +64,8 @@ export default function ExpenseForm({
         setParticipants((prev) =>
             prev.includes(friendId)
                 ? prev.filter(
-                      (id) => id !== friendId
-                  )
+                    (id) => id !== friendId
+                )
                 : [...prev, friendId]
         );
     };
@@ -108,64 +109,21 @@ export default function ExpenseForm({
             onSubmit={handleSubmit}
             className="space-y-4"
         >
-            <div>
-                <label>
-                    Expense Title
-                </label>
 
-                <input
-                    value={title}
-                    onChange={(e) =>
-                        setTitle(
-                            e.target.value
-                        )
-                    }
-                    className="w-full border px-3 py-2 rounded"
-                    autoFocus
-                />
-            </div>
-
-            <div>
-                <label>Amount</label>
-
-                <input
-                    type="number"
-                    value={amount}
-                    onChange={(e) =>
-                        setAmount(
-                            Number(
-                                e.target.value
-                            )
-                        )
-                    }
-                    className="w-full border px-3 py-2 rounded"
-                />
-            </div>
+            <InputField title="Expense Title" value={title} handleChange={(e) => setTitle(e.target.value)} placeholder="eg: Tea and Snacks" autofocus />
+            <InputField title="Amount" type="number" value={amount} handleChange={(e) => setAmount(Number(e.target.value))} />
 
             <div>
                 <label>Paid By</label>
-
                 <select
                     value={paidBy}
-                    onChange={(e) =>
-                        setPaidBy(
-                            e.target.value
-                        )
-                    }
-                    className="w-full border px-3 py-2 rounded"
+                    onChange={(e) => setPaidBy(e.target.value)}
+                    className="w-full border border-neutral-300 px-3 py-1.5 rounded focus:outline-1 focus:outline-emerald-500"
                 >
-                    <option value="">
-                        Select Friend
-                    </option>
-
+                    <option value=""> Select Friend </option>
                     {book.friends.map(
                         (friend) => (
-                            <option
-                                key={friend.id}
-                                value={
-                                    friend.id
-                                }
-                            >
+                            <option key={friend.id} value={friend.id}>
                                 {friend.name}
                             </option>
                         )
@@ -178,7 +136,7 @@ export default function ExpenseForm({
                     Participants
                 </label>
 
-                <div className="mt-2 flex flex-col gap-2">
+                <div className="mt-2 flex flex-col gap-2 accent-emerald-500">
                     {book.friends.map(
                         (friend) => (
                             <label
