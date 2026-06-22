@@ -10,7 +10,8 @@ import FriendsList from "../components/FriendsList";
 import { useParams } from "react-router";
 import { useExpenseStore } from "../store/expenseStore";
 import EditBook from "../components/EditBook";
-import type { Expense } from "../types";
+import type { Expense, Friend } from "../types";
+import FriendForm from "../components/FriendForm";
 
 export default function BookDetails() {
 
@@ -18,10 +19,13 @@ export default function BookDetails() {
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
 
+    const [isAddFriendOpen, setIsAddFriendOpen] = useState(false);
+    const [editingFriend, setEditingFriend] = useState<Friend | null>(null);
 
     const { id } = useParams<{ id: string }>();
     const book = useExpenseStore((state) => state.books.find((book) => book.id === id));
     const deleteExpense = useExpenseStore((state) => state.deleteExpense);
+    const deleteFriend = useExpenseStore((state) => state.deleteFriend);
 
     if (!book) {
         return <div className="p-8 text-center text-neutral-500">Expense book not found.</div>;
@@ -41,6 +45,15 @@ export default function BookDetails() {
 
             <Modal title="Edit Expense" isOpen={!!editingExpense} closeModal={() => setEditingExpense(null)} >
                 {editingExpense && (<ExpenseForm bookId={book.id} initialData={editingExpense} onSuccess={() => setEditingExpense(null)} />)}
+            </Modal>
+
+            <Modal title="Add Friend" isOpen={isAddFriendOpen} closeModal={() => setIsAddFriendOpen(false)}>
+                <FriendForm bookId={book.id} onSuccess={() => setIsAddFriendOpen(false)} />
+            </Modal>
+
+            <Modal title="Edit Friend" isOpen={!!editingFriend} closeModal={() => setEditingFriend(null)}>
+                {editingFriend && (
+                    <FriendForm bookId={book.id} friendId={editingFriend.id} initialName={editingFriend.name} onSuccess={() => setEditingFriend(null)} />)}
             </Modal>
 
             <div className="flex gap-5 flex-col sm:flex-row justify-between sm:items-center mb-8">
@@ -69,14 +82,30 @@ export default function BookDetails() {
 
                 <section className="grid lg:col-span-1 row-span-2">
                     <Tile title="Friends">
-                        <div className="flex gap-3 mb-5">
-                            <input type="text" placeholder="Friend's name" className="w-full border border-neutral-300 px-3 py-2 rounded focus:outline-1 focus:outline-emerald-500 placeholder:text-neutral-400" />
-                            <Button>+ Add</Button>
+                        <div className="mb-5">
+                            <Button fullWidth handleClick={() => setIsAddFriendOpen(true)}>
+                                + Add Friend
+                            </Button>
                         </div>
                         <div className="flex flex-col gap-3">
-                            <FriendsList />
-                            <FriendsList />
-                            <FriendsList />
+                            <div className="flex flex-col gap-3">
+                                {book.friends.length === 0 ? (
+                                    <p className="text-center text-neutral-500">
+                                        No friends added yet
+                                    </p>
+                                ) : (
+                                    book.friends.map(
+                                        (friend) => (
+                                            <FriendsList
+                                                key={friend.id}
+                                                friend={friend}
+                                                onEdit={() => setEditingFriend(friend)}
+                                                onDelete={() => deleteFriend(book.id, friend.id)}
+                                            />
+                                        )
+                                    )
+                                )}
+                            </div>
                         </div>
                     </Tile>
                 </section>
