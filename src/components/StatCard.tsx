@@ -1,4 +1,4 @@
-import { HandCoins, IndianRupee, Users2 } from "lucide-react"
+import { IndianRupee, TextAlignJustify, Users2 } from "lucide-react"
 
 
 const STAT_CARD_COLORS = {
@@ -40,8 +40,8 @@ const STAT_CARD_TYPE = {
         icon: Users2,
     },
     receivable: {
-        title: "Total Owed to You",
-        icon: HandCoins,
+        title: "Total Entries",
+        icon: TextAlignJustify,
     }
 } as const;
 
