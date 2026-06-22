@@ -67,10 +67,10 @@ export default function BookDetails() {
             <div className="flex gap-5 flex-col sm:flex-row justify-between sm:items-center mb-8">
                 <div className="group cursor-pointer" onClick={() => setIsEditOpen(true)}>
                     <div className="flex gap-3 items-end ">
-                        <h2 className="text-2xl font-bold">{book.name}</h2>
+                        <h2 className="text-xl md:text-2xl font-bold">{book.name}</h2>
                         <PenLine className="lg:hidden group-hover:block text-neutral-400 mb-1" size={18} />
                     </div>
-                    <p className="text-neutral-500">{book.description}</p>
+                    <p className="text-sm md:text-base text-neutral-500">{book.description}</p>
                 </div>
                 <div className="w-full sm:w-fit">
                     <Button handleClick={() => setIsAddExpOpen(true)} fullWidth>+ Add Expenses</Button>

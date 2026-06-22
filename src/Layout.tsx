@@ -13,7 +13,7 @@ export default function Layout() {
               <Wallet />
             </div>
             <div>
-              <h2 className="text-2xl font-bold">Net Split</h2>
+              <h2 className="text-xl md:text-2xl font-bold">Net Split</h2>
               <p className="text-sm text-neutral-500">Split group expenses fairly and instantly.</p>
             </div>
           </Link>
