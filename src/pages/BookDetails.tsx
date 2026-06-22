@@ -2,7 +2,7 @@ import { PenLine } from "lucide-react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import { useState } from "react";
-import AddExpense from "../components/AddExpense";
+import ExpenseForm from "../components/ExpenseForm";
 import Tile from "../components/Tile";
 import StatCard from "../components/StatCard";
 import ExpenseList from "../components/ExpenseList";
@@ -10,27 +10,39 @@ import FriendsList from "../components/FriendsList";
 import { useParams } from "react-router";
 import { useExpenseStore } from "../store/expenseStore";
 import EditBook from "../components/EditBook";
+import type { Expense } from "../types";
 
 export default function BookDetails() {
-    const [isAddExpOpen, setIsAddExpOpen] = useState<boolean>(false);
-    const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
+
+    const [isAddExpOpen, setIsAddExpOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
+
+
     const { id } = useParams<{ id: string }>();
     const book = useExpenseStore((state) => state.books.find((book) => book.id === id));
+    const deleteExpense = useExpenseStore((state) => state.deleteExpense);
 
     if (!book) {
         return <div className="p-8 text-center text-neutral-500">Expense book not found.</div>;
     }
 
-    const totalExpense = book.expenses.reduce((n, ex) => n + ex.amount, 0)
+    const totalExpense = book.expenses.reduce((sum, expense) => sum + expense.amount, 0);
 
     return (
         <>
             <Modal title="Edit Book" isOpen={isEditOpen} closeModal={() => setIsEditOpen(false)}>
                 <EditBook bookId={book.id} initialName={book.name} initialDescription={book.description} onSuccess={() => setIsEditOpen(false)} />
             </Modal>
-            <Modal title={"Add Expense"} isOpen={isAddExpOpen} closeModal={() => setIsAddExpOpen(false)}>
-                <AddExpense />
+
+            <Modal title="Add Expense" isOpen={isAddExpOpen} closeModal={() => setIsAddExpOpen(false)} >
+                <ExpenseForm bookId={book.id} onSuccess={() => setIsAddExpOpen(false)} />
             </Modal>
+
+            <Modal title="Edit Expense" isOpen={!!editingExpense} closeModal={() => setEditingExpense(null)} >
+                {editingExpense && (<ExpenseForm bookId={book.id} initialData={editingExpense} onSuccess={() => setEditingExpense(null)} />)}
+            </Modal>
+
             <div className="flex gap-5 flex-col sm:flex-row justify-between sm:items-center mb-8">
                 <div className="group cursor-pointer" onClick={() => setIsEditOpen(true)}>
                     <div className="flex gap-3 items-end ">
@@ -72,10 +84,37 @@ export default function BookDetails() {
                 <section className="grid lg:col-span-2">
                     <Tile title="Expenses">
                         <div className="flex flex-col gap-3">
-                            <ExpenseList />
-                            <ExpenseList />
-                            <ExpenseList />
-                            <ExpenseList />
+                            {book.expenses.length === 0 ? (
+                                <p className="text-neutral-500 text-center">
+                                    No expenses yet
+                                </p>
+                            ) : (
+                                book.expenses.map(
+                                    (expense) => {
+                                        const paidByName = book.friends.find((friend) => friend.id === expense.paidBy)?.name ?? "Unknown";
+                                        return (
+                                            <ExpenseList
+                                                key={expense.id}
+                                                expense={expense}
+                                                paidByName={
+                                                    paidByName
+                                                }
+                                                onEdit={() =>
+                                                    setEditingExpense(
+                                                        expense
+                                                    )
+                                                }
+                                                onDelete={() =>
+                                                    deleteExpense(
+                                                        book.id,
+                                                        expense.id
+                                                    )
+                                                }
+                                            />
+                                        );
+                                    }
+                                )
+                            )}
                         </div>
                     </Tile>
                 </section>

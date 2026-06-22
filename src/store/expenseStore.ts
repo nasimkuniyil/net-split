@@ -8,12 +8,6 @@ export interface CreateBookData {
   description?: string;
 }
 
-interface GetBookResponse {
-  id: string;
-  name: string;
-  totalExpense: number;
-}
-
 interface CreateExpenseData {
   title: string;
   amount: number;
@@ -42,15 +36,11 @@ interface ExpenseStore {
     data: Partial<CreateExpenseData>,
   ) => void;
   deleteExpense: (bookId: string, expenseId: string) => void;
-
-  // HELPERS
-  getAllBooks: () => GetBookResponse[];
-  getBook: (bookId: string) => ExpenseBook | undefined;
 }
 
 export const useExpenseStore = create<ExpenseStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       books: [],
 
       // BOOKS
@@ -194,18 +184,6 @@ export const useExpenseStore = create<ExpenseStore>()(
             };
           }),
         })),
-
-      // HELPERS
-      getAllBooks(): GetBookResponse[] {
-        return get().books.map((b) => ({
-          id: b.id,
-          name: b.name,
-          totalExpense: b.expenses.reduce((a, b) => a + b.amount, 0),
-        }));
-      },
-      getBook: (bookId) => {
-        return get().books.find((book) => book.id === bookId);
-      },
     }),
     {
       name: "expense-splitter-storage",

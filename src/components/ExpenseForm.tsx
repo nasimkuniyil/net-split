@@ -1,0 +1,214 @@
+import { FormEvent, useMemo, useState } from "react";
+import Button from "./Button";
+import { useExpenseStore } from "../store/expenseStore";
+import type { Expense } from "../types";
+
+interface ExpenseFormProps {
+    bookId: string;
+    initialData?: Expense;
+    onSuccess: () => void;
+}
+
+export default function ExpenseForm({
+    bookId,
+    initialData,
+    onSuccess,
+}: ExpenseFormProps) {
+    const book = useExpenseStore(
+        (state) =>
+            state.books.find(
+                (book) => book.id === bookId
+            )
+    );
+
+    const addExpense = useExpenseStore(
+        (state) => state.addExpense
+    );
+
+    const updateExpense = useExpenseStore(
+        (state) => state.updateExpense
+    );
+
+    const friendIds = useMemo(
+        () =>
+            book?.friends.map(
+                (friend) => friend.id
+            ) ?? [],
+        [book]
+    );
+
+    const [title, setTitle] = useState(
+        initialData?.title ?? ""
+    );
+
+    const [amount, setAmount] = useState(
+        initialData?.amount ?? 0
+    );
+
+    const [paidBy, setPaidBy] = useState(
+        initialData?.paidBy ?? ""
+    );
+
+    const [participants, setParticipants] =
+        useState<string[]>(
+            initialData?.participants ??
+                friendIds
+        );
+
+    if (!book) return null;
+
+    const toggleParticipant = (
+        friendId: string
+    ) => {
+        setParticipants((prev) =>
+            prev.includes(friendId)
+                ? prev.filter(
+                      (id) => id !== friendId
+                  )
+                : [...prev, friendId]
+        );
+    };
+
+    const handleSubmit = (
+        e: FormEvent
+    ) => {
+        e.preventDefault();
+
+        if (
+            !title.trim() ||
+            !amount ||
+            !paidBy ||
+            participants.length === 0
+        ) {
+            return;
+        }
+
+        const payload = {
+            title,
+            amount,
+            paidBy,
+            participants,
+        };
+
+        if (initialData) {
+            updateExpense(
+                bookId,
+                initialData.id,
+                payload
+            );
+        } else {
+            addExpense(bookId, payload);
+        }
+
+        onSuccess();
+    };
+
+    return (
+        <form
+            onSubmit={handleSubmit}
+            className="space-y-4"
+        >
+            <div>
+                <label>
+                    Expense Title
+                </label>
+
+                <input
+                    value={title}
+                    onChange={(e) =>
+                        setTitle(
+                            e.target.value
+                        )
+                    }
+                    className="w-full border px-3 py-2 rounded"
+                    autoFocus
+                />
+            </div>
+
+            <div>
+                <label>Amount</label>
+
+                <input
+                    type="number"
+                    value={amount}
+                    onChange={(e) =>
+                        setAmount(
+                            Number(
+                                e.target.value
+                            )
+                        )
+                    }
+                    className="w-full border px-3 py-2 rounded"
+                />
+            </div>
+
+            <div>
+                <label>Paid By</label>
+
+                <select
+                    value={paidBy}
+                    onChange={(e) =>
+                        setPaidBy(
+                            e.target.value
+                        )
+                    }
+                    className="w-full border px-3 py-2 rounded"
+                >
+                    <option value="">
+                        Select Friend
+                    </option>
+
+                    {book.friends.map(
+                        (friend) => (
+                            <option
+                                key={friend.id}
+                                value={
+                                    friend.id
+                                }
+                            >
+                                {friend.name}
+                            </option>
+                        )
+                    )}
+                </select>
+            </div>
+
+            <div>
+                <label>
+                    Participants
+                </label>
+
+                <div className="mt-2 flex flex-col gap-2">
+                    {book.friends.map(
+                        (friend) => (
+                            <label
+                                key={friend.id}
+                                className="flex gap-2"
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={participants.includes(
+                                        friend.id
+                                    )}
+                                    onChange={() =>
+                                        toggleParticipant(
+                                            friend.id
+                                        )
+                                    }
+                                />
+
+                                {friend.name}
+                            </label>
+                        )
+                    )}
+                </div>
+            </div>
+
+            <Button type="submit">
+                {initialData
+                    ? "Save Changes"
+                    : "Add Expense"}
+            </Button>
+        </form>
+    );
+}
