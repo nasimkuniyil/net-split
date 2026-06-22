@@ -12,6 +12,10 @@ import { useExpenseStore } from "../store/expenseStore";
 import EditBook from "../components/EditBook";
 import type { Expense, Friend } from "../types";
 import FriendForm from "../components/FriendForm";
+import { calculateBalances } from "../utils/calculateBalance";
+import { generateSettlements } from "../utils/generateSettlements";
+import SettlementCard from "../components/SettlementCard";
+import TransactionItem from "../components/TransactionItem";
 
 export default function BookDetails() {
 
@@ -32,6 +36,8 @@ export default function BookDetails() {
     }
 
     const totalExpense = book.expenses.reduce((sum, expense) => sum + expense.amount, 0);
+    const balances = calculateBalances(book);
+    const settlements = generateSettlements(balances);
 
     return (
         <>
@@ -70,7 +76,7 @@ export default function BookDetails() {
             </div>
 
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                <section className="grid lg:col-span-2">
+                <section className="lg:col-span-2">
                     <Tile title="Summary">
                         <div className="grid gap-3 lg:grid-cols-3 w-full">
                             <StatCard color="green" amount={totalExpense} />
@@ -80,7 +86,7 @@ export default function BookDetails() {
                     </Tile>
                 </section>
 
-                <section className="grid lg:col-span-1 row-span-2">
+                <section className="lg:row-span-2">
                     <Tile title="Friends">
                         <div className="mb-5">
                             <Button fullWidth handleClick={() => setIsAddFriendOpen(true)}>
@@ -110,7 +116,7 @@ export default function BookDetails() {
                     </Tile>
                 </section>
 
-                <section className="grid lg:col-span-2">
+                <section className="lg:col-span-2">
                     <Tile title="Expenses">
                         <div className="flex flex-col gap-3">
                             {book.expenses.length === 0 ? (
@@ -150,6 +156,81 @@ export default function BookDetails() {
                     </Tile>
                 </section>
 
+                <section className="lg:col-span-2">
+                    <Tile title="Settlement">
+
+                        <div className="flex flex-col gap-3">
+
+                            {balances.map((person) => {
+
+                                const friend =
+                                    book.friends.find(
+                                        (f) =>
+                                            f.id ===
+                                            person.friendId
+                                    );
+
+                                if (!friend) return null;
+
+                                return (
+                                    <SettlementCard
+                                        key={friend.id}
+                                        name={friend.name}
+                                        amount={Math.abs(
+                                            person.balance
+                                        )}
+                                        type={
+                                            person.balance >= 0
+                                                ? "receive"
+                                                : "pay"
+                                        }
+                                    />
+                                );
+                            })}
+
+                        </div>
+
+                        <hr className="my-5 border-neutral-200" />
+
+                        <h3 className="font-semibold mb-3">
+                            Transactions
+                        </h3>
+
+                        <div className="flex flex-col gap-3">
+                            {settlements.map(
+                                (settlement) => {
+                                    const from =
+                                        book.friends.find(
+                                            (f) =>
+                                                f.id ===
+                                                settlement.from
+                                        );
+
+                                    const to =
+                                        book.friends.find(
+                                            (f) =>
+                                                f.id ===
+                                                settlement.to
+                                        );
+
+                                    if (!from || !to)
+                                        return null;
+
+                                    return (
+                                        <TransactionItem
+                                            key={`${settlement.from}-${settlement.to}`}
+                                            from={from.name}
+                                            to={to.name}
+                                            amount={
+                                                settlement.amount
+                                            }
+                                        />
+                                    );
+                                }
+                            )}
+                        </div>
+                    </Tile>
+                </section>
 
             </div>
         </>
