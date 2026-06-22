@@ -3,7 +3,7 @@ interface Balance {
   balance: number;
 }
 
-interface Settlement {
+export interface Settlement {
   from: string;
   to: string;
   amount: number;

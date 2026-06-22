@@ -16,6 +16,7 @@ import { calculateBalances } from "../utils/calculateBalance";
 import { generateSettlements } from "../utils/generateSettlements";
 import SettlementCard from "../components/SettlementCard";
 import TransactionItem from "../components/TransactionItem";
+import { generateWhatsappMessage } from "../utils/generateWhatsappMessage";
 
 export default function BookDetails() {
 
@@ -38,6 +39,7 @@ export default function BookDetails() {
     const totalExpense = book.expenses.reduce((sum, expense) => sum + expense.amount, 0);
     const balances = calculateBalances(book);
     const settlements = generateSettlements(balances);
+    const whatsappMessage = generateWhatsappMessage(book, settlements);
 
     return (
         <>
@@ -75,8 +77,8 @@ export default function BookDetails() {
                 </div>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                <section className="lg:col-span-2">
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+                <section className="col-span-2 md:col-span-1 lg:col-span-3">
                     <Tile title="Summary">
                         <div className="grid gap-3 lg:grid-cols-3 w-full">
                             <StatCard color="green" amount={totalExpense} />
@@ -86,7 +88,7 @@ export default function BookDetails() {
                     </Tile>
                 </section>
 
-                <section className="lg:row-span-2">
+                <section className="col-span-2 md:col-span-1 md:row-span-2 lg:col-span-2">
                     <Tile title="Friends">
                         <div className="mb-5">
                             <Button fullWidth handleClick={() => setIsAddFriendOpen(true)}>
@@ -116,7 +118,7 @@ export default function BookDetails() {
                     </Tile>
                 </section>
 
-                <section className="lg:col-span-2">
+                <section className="col-span-2 md:col-span-1 lg:col-span-3">
                     <Tile title="Expenses">
                         <div className="flex flex-col gap-3">
                             {book.expenses.length === 0 ? (
@@ -156,7 +158,7 @@ export default function BookDetails() {
                     </Tile>
                 </section>
 
-                <section className="lg:col-span-2">
+                <section className="col-span-2 md:col-span-1 lg:col-span-3">
                     <Tile title="Settlement">
 
                         <div className="flex flex-col gap-3">
@@ -232,7 +234,22 @@ export default function BookDetails() {
                     </Tile>
                 </section>
 
-            </div>
+                <section className="col-span-2 md:col-span-1 lg:col-span-2">
+                    <Tile title="Message">
+                        <pre className="whitespace-pre-wrap mb-4 px-4 py-3 bg-emerald-50 rounded border border-emerald-200">
+                            {whatsappMessage}
+                        </pre>
+                        <Button
+                            fullWidth
+                            handleClick={() => {
+                                navigator.clipboard.writeText(whatsappMessage);
+                                alert('message copied');
+                            }}                        >
+                            Copy Message
+                        </Button>
+                    </Tile>
+                </section>
+            </div >
         </>
     )
 }
