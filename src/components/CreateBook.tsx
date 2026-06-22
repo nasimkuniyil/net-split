@@ -1,19 +1,56 @@
+import { useState, type FormEvent } from "react";
+import { type CreateBookData, useExpenseStore } from "../store/expenseStore";
 import Button from "./Button";
 
-export default function CreateBook() {
+const initialFormState: CreateBookData = {
+    name: "",
+    description: ""
+};
+
+export default function CreateBook({ onSuccess }: { onSuccess: () => void }) {
+    const [data, setData] = useState<CreateBookData>(initialFormState);
+    const { addBook } = useExpenseStore();
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        if (!data.name.trim()) return;
+
+        addBook(data);
+        setData(initialFormState);
+        onSuccess();
+    };
+
     return (
-        <div>
+        <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2 mx-auto mb-4">
-                <label htmlFor="" className="text-nowrap">Title</label>
-                <input type="text" className="w-full border border-neutral-300 px-3 py-1.5 rounded focus:outline-1 focus:outline-emerald-500 placeholder:text-neutral-400" placeholder="Weekend Ride" autoFocus />
+                <label className="text-nowrap font-medium text-neutral-700">Title</label>
+                <input
+                    type="text"
+                    value={data.name}
+                    onChange={(e) => setData(prev => ({ ...prev, name: e.target.value }))}
+                    name="name"
+                    className="w-full border border-neutral-300 px-3 py-1.5 rounded focus:outline-1 focus:outline-emerald-500 placeholder:text-neutral-400"
+                    placeholder="Weekend Ride"
+                    autoFocus
+                    required
+                />
             </div>
+
             <div className="flex flex-col gap-2 mx-auto mb-4">
-                <label htmlFor="" className="text-nowrap">Description</label>
-                <textarea className="w-full border border-neutral-300 px-3 py-1.5 rounded focus:outline-1 focus:outline-emerald-500 placeholder:text-neutral-400" placeholder="Weekend Ride" rows={3} />
+                <label className="text-nowrap font-medium text-neutral-700">Description</label>
+                <textarea
+                    value={data.description}
+                    onChange={(e) => setData(prev => ({ ...prev, description: e.target.value }))}
+                    name="description"
+                    className="w-full border border-neutral-300 px-3 py-1.5 rounded focus:outline-1 focus:outline-emerald-500 placeholder:text-neutral-400"
+                    placeholder="Weekend getaway notes..."
+                    rows={3}
+                />
             </div>
+
             <div className="text-center">
-                <Button>Create Book</Button>
+                <Button type="submit">Create Book</Button>
             </div>
-        </div>
+        </form>
     )
 }

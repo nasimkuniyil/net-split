@@ -7,27 +7,40 @@ import Tile from "../components/Tile";
 import StatCard from "../components/StatCard";
 import ExpenseList from "../components/ExpenseList";
 import FriendsList from "../components/FriendsList";
+import { useParams } from "react-router";
+import { useExpenseStore } from "../store/expenseStore";
+import EditBook from "../components/EditBook";
 
 export default function BookDetails() {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isAddExpOpen, setIsAddExpOpen] = useState<boolean>(false);
+    const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
+    const { id } = useParams<{ id: string }>();
+    const book = useExpenseStore((state) => state.books.find((book) => book.id === id));
+
+    if (!book) {
+        return <div className="p-8 text-center text-neutral-500">Expense book not found.</div>;
+    }
+
+    const totalExpense = book.expenses.reduce((n, ex) => n + ex.amount, 0)
 
     return (
-
         <>
-
-            <Modal title={"Add Expense"} isOpen={isOpen} closeModal={() => setIsOpen(false)}>
+            <Modal title="Edit Book" isOpen={isEditOpen} closeModal={() => setIsEditOpen(false)}>
+                <EditBook bookId={book.id} initialName={book.name} initialDescription={book.description} onSuccess={() => setIsEditOpen(false)} />
+            </Modal>
+            <Modal title={"Add Expense"} isOpen={isAddExpOpen} closeModal={() => setIsAddExpOpen(false)}>
                 <AddExpense />
             </Modal>
             <div className="flex gap-5 flex-col sm:flex-row justify-between sm:items-center mb-8">
-                <div className="group cursor-pointer">
+                <div className="group cursor-pointer" onClick={() => setIsEditOpen(true)}>
                     <div className="flex gap-3 items-end ">
-                        <h2 className="text-2xl font-bold">Weekend Ride</h2>
+                        <h2 className="text-2xl font-bold">{book.name}</h2>
                         <PenLine className="lg:hidden group-hover:block text-neutral-400 mb-1" size={18} />
                     </div>
-                    <p className="text-neutral-500">Something about this expense book.</p>
+                    <p className="text-neutral-500">{book.description}</p>
                 </div>
                 <div className="w-full sm:w-fit">
-                    <Button handleClick={() => setIsOpen(true)} fullWidth>+ Add Expenses</Button>
+                    <Button handleClick={() => setIsAddExpOpen(true)} fullWidth>+ Add Expenses</Button>
                 </div>
             </div>
 
@@ -35,9 +48,9 @@ export default function BookDetails() {
                 <section className="grid lg:col-span-2">
                     <Tile title="Summary">
                         <div className="grid gap-3 lg:grid-cols-3 w-full">
-                            <StatCard color="green" amount={1500} />
-                            <StatCard color="blue" type="friend" amount={4} />
-                            <StatCard color="purple" type="receivable" amount={1500} />
+                            <StatCard color="green" amount={totalExpense} />
+                            <StatCard color="blue" type="friend" amount={book.friends.length} />
+                            <StatCard color="purple" type="receivable" amount={0} />
                         </div>
                     </Tile>
                 </section>

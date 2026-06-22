@@ -5,13 +5,15 @@ import StatCard from "../components/StatCard";
 import Modal from "../components/Modal";
 import { useState } from "react";
 import CreateBook from "../components/CreateBook";
+import { useExpenseStore } from "../store/expenseStore";
 
 export default function Home() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const { getAllBooks } = useExpenseStore();
     return (
         <>
             <Modal title={"Create new book"} isOpen={isOpen} closeModal={() => setIsOpen(false)}>
-                <CreateBook />
+                <CreateBook onSuccess={() => setIsOpen(false)} />
             </Modal>
 
             <div>
@@ -21,22 +23,15 @@ export default function Home() {
                 <div>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 
-                        <ActionLink href={`/books/123`}>
-                            <Tile title={"Weekend Ride"}>
-                                <StatCard amount={2500} />
-                            </Tile>
-                        </ActionLink>
-                        <ActionLink href={`/books/124`}>
-                            <Tile title={"Hostel Food"}>
-                                <StatCard amount={1750} />
-                            </Tile>
-                        </ActionLink>
-                        <ActionLink href={`/books/125`}>
-                            <Tile title={"Goa Trip"}>
-                                <StatCard amount={5000} />
-                            </Tile>
-                        </ActionLink>
-
+                        {
+                            getAllBooks()?.map(b => (
+                                <ActionLink key={b.id} href={`/books/${b.id}`}>
+                                    <Tile title={b.name}>
+                                        <StatCard amount={b.totalExpense} />
+                                    </Tile>
+                                </ActionLink>
+                            ))
+                        }
                     </ul>
                 </div>
             </div>
