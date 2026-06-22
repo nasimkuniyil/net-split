@@ -4,13 +4,19 @@ Net Split is a modern expense-sharing web application that helps groups of frien
 
 Whether it's a trip, team lunch, hostel expenses, weekend ride, or any group activity, Net Split makes it easy to track who paid, who owes money, and the final settlement transactions.
 
+
+### Screenshots
+
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1cbc8a1f-0239-45f8-bc94-831b7d128d29" />
+
 _home-page-screenshot_
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e1138716-86cc-49de-bb26-103683607d96" />
+
 _detailes-page-screenshot_
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/f973d078-b42f-4e48-a342-5cfd1060861d" />
+
 _settlement-section-screenshot_
 
 ## Features
@@ -131,6 +137,7 @@ Akhil ➜ Nasim ₹400
 Generated using Net Split
 
 <img width="787" height="861" alt="image" src="https://github.com/user-attachments/assets/7b38e13b-d43e-42ed-a70c-227ffc892c58" />
+
 _message-screenshot_
 
 ### Local Storage Persistence
