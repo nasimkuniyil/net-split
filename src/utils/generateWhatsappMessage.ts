@@ -18,7 +18,7 @@ export function generateWhatsappMessage(
     .map((expense) => {
       const payer = book.friends.find((friend) => friend.id === expense.paidBy);
 
-      return `✅ ${payer?.name} paid: ₹${expense.amount}`;
+      return `✅ ${payer?.name} paid: ₹${expense.amount} for ${expense.title}`;
     })
     .join("\n");
 
