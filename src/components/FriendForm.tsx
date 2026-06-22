@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import Button from "./Button";
 import { useExpenseStore } from "../store/expenseStore";
 import InputField from "./InputField";
@@ -26,7 +26,7 @@ export default function FriendForm({
         (state) => state.updateFriend
     );
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!name.trim()) return;
@@ -50,7 +50,7 @@ export default function FriendForm({
             className="space-y-4"
         >
 
-            <InputField title="Friend Name" value={name} handleChange={(e)=>setName(e.target.value)} placeholder="eg: John Deo" autofocus/>
+            <InputField title="Friend Name" value={name} handleChange={(e) => setName(e.target.value)} placeholder="eg: John Deo" autofocus />
 
             <Button type="submit">
                 {friendId

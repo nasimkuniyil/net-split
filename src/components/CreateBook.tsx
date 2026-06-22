@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState, type SubmitEvent } from "react";
 import { type CreateBookData, useExpenseStore } from "../store/expenseStore";
 import Button from "./Button";
 import InputField from "./InputField";
@@ -12,7 +12,7 @@ export default function CreateBook({ onSuccess }: { onSuccess: () => void }) {
     const [data, setData] = useState<CreateBookData>(initialFormState);
     const { addBook } = useExpenseStore();
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!data.name.trim()) return;
 

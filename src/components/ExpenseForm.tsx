@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useState } from "react";
+import {  useMemo, useState, type SubmitEvent, } from "react";
 import Button from "./Button";
 import { useExpenseStore } from "../store/expenseStore";
 import type { Expense } from "../types";
@@ -71,7 +71,7 @@ export default function ExpenseForm({
     };
 
     const handleSubmit = (
-        e: FormEvent
+        e: SubmitEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
 

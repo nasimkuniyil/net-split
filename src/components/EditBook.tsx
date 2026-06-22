@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import { useExpenseStore } from "../store/expenseStore";
 import Button from "./Button";
 import InputField from "./InputField";
@@ -27,7 +27,7 @@ export default function EditBook({
         useState(initialDescription ?? "");
 
     const handleSubmit = (
-        e: FormEvent
+        e: SubmitEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
 
