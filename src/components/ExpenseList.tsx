@@ -1,12 +1,13 @@
 import { Trash2, Users2 } from "lucide-react";
 import type { Expense } from "../types";
+import type { MouseEvent } from "react";
 
 interface ExpenseListProps {
     expense: Expense;
     paidByName: string;
 
     onEdit: () => void;
-    onDelete: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onDelete: (e: MouseEvent<SVGSVGElement, globalThis.MouseEvent>) => void;
 }
 
 export default function ExpenseList({
@@ -44,7 +45,7 @@ export default function ExpenseList({
             <div className="flex gap-3 items-center text-neutral-500 opacity-100 lg:opacity-0 group-hover:opacity-100 transition">
                 <Trash2
                     size={18}
-                    onClick={onDelete}
+                    onClick={(e) => onDelete(e)}
                     className="hover:text-red-500"
                 />
             </div>
