@@ -1,5 +1,5 @@
 import { Wallet } from "lucide-react";
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 import { env } from "./config/env";
 import ActionLink from "./components/ActionLink";
 
@@ -8,7 +8,7 @@ export default function Layout() {
     <>
       <header className="bg-white border-b border-neutral-200 py-6 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="flex gap-3 items-center">
+          <Link to={"/"} className="flex gap-3 items-center">
             <div className="bg-emerald-500 text-white p-3 rounded-lg">
               <Wallet />
             </div>
@@ -16,7 +16,7 @@ export default function Layout() {
               <h2 className="text-2xl font-bold">Net Split</h2>
               <p className="text-sm text-neutral-500">Split group expenses fairly and instantly.</p>
             </div>
-          </div>
+          </Link>
         </div>
       </header>
       <main className="max-w-6xl mx-auto min-h-screen py-6 px-4">
