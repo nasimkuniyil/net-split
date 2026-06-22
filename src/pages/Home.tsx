@@ -36,11 +36,12 @@ export default function Home() {
                 <CreateBook onSuccess={() => setIsOpen(false)} />
             </Modal>
 
-            {
-                books.length === 0 && (
-                    <Tile title="No Expense Books">
-                        <div className="text-center py-8">
-                            <p className="text-neutral-500 mb-4">
+            <div>
+                {
+                    books.length === 0 ? (
+                        <div className="text-center pt-10 ">
+                            <h2 className="text-xl font-bold mb-2">No Expense Book</h2>
+                            <p className="text-neutral-500 mb-8">
                                 Create your first expense book to get started.
                             </p>
 
@@ -52,14 +53,12 @@ export default function Home() {
                                 Create First Book
                             </Button>
                         </div>
-                    </Tile>
-                )
-            }
-
-            <div>
-                <div className="text-end mb-5">
-                    <Button handleClick={() => setIsOpen(true)}>Create New Book</Button>
-                </div>
+                    ) : (
+                        <div className="text-end mb-5">
+                            <Button handleClick={() => setIsOpen(true)}>Create New Book</Button>
+                        </div>
+                    )
+                }
                 <div>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 
