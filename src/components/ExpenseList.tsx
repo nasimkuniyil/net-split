@@ -19,7 +19,7 @@ export default function ExpenseList({
         <div className="group p-5 rounded bg-neutral-50 flex justify-between cursor-pointer"
             onClick={onEdit}>
             <div className="w-full">
-                <h3 className="text-lg font-bold text-neutral-600">
+                <h3 className="lg:text-lg font-bold text-neutral-600">
                     {expense.title}
                 </h3>
 

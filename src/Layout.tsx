@@ -1,5 +1,5 @@
 import { Wallet } from "lucide-react";
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 import { env } from "./config/env";
 import ActionLink from "./components/ActionLink";
 
@@ -8,26 +8,26 @@ export default function Layout() {
     <>
       <header className="bg-white border-b border-neutral-200 py-6 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="flex gap-3 items-center">
+          <Link to={"/"} className="flex gap-3 items-center">
             <div className="bg-emerald-500 text-white p-3 rounded-lg">
               <Wallet />
             </div>
             <div>
-              <h2 className="text-2xl font-bold">Net Split</h2>
+              <h2 className="text-xl md:text-2xl font-bold">Net Split</h2>
               <p className="text-sm text-neutral-500">Split group expenses fairly and instantly.</p>
             </div>
-          </div>
+          </Link>
         </div>
       </header>
       <main className="max-w-6xl mx-auto min-h-screen py-6 px-4">
         <Outlet />
       </main>
       <footer className="border-t border-neutral-200 bg-white">
-        <div className="max-w-6xl mx-auto  py-8 px-4 ">
-          <div className="flex justify-between items-center">
+        <div className="max-w-6xl mx-auto  py-6 px-4 ">
+          <div className="flex flex-col sm:flex-row text-center sm:text-start sm:justify-between items-center ">
             {env.showDigitalHeroes ? (
               <>
-                <div>
+                <div className="mb-5">
                   <h3 className="font-semibold">Muhammed Nasim K</h3>
                   <ActionLink href="mailto:md.nasimkuniyil@gmail.com" underline light newPage>md.nasimkuniyil@gmail.com</ActionLink>
                 </div>

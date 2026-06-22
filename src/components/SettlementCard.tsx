@@ -11,12 +11,12 @@ export default function SettlementCard({
 }: SettlementCardProps) {
     return (
         <div className="p-4 rounded bg-neutral-50 flex gap-3 justify-between items-center">
-            <h3 className="font-medium sm:text-lg">
+            <h3 className="font-medium lg:text-lg">
                 {name}
             </h3>
 
             <div className="flex items-center gap-3">
-                <span className="font-bold sm:text-lg">
+                <span className="font-bold lg:text-lg">
                     ₹{amount.toFixed(2)}
                 </span>
 

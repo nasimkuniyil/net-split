@@ -1,6 +1,7 @@
-import { FormEvent, useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import Button from "./Button";
 import { useExpenseStore } from "../store/expenseStore";
+import InputField from "./InputField";
 
 interface FriendFormProps {
     bookId: string;
@@ -25,7 +26,7 @@ export default function FriendForm({
         (state) => state.updateFriend
     );
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!name.trim()) return;
@@ -48,22 +49,8 @@ export default function FriendForm({
             onSubmit={handleSubmit}
             className="space-y-4"
         >
-            <div>
-                <label>
-                    Friend Name
-                </label>
 
-                <input
-                    value={name}
-                    onChange={(e) =>
-                        setName(
-                            e.target.value
-                        )
-                    }
-                    className="w-full border px-3 py-2 rounded"
-                    autoFocus
-                />
-            </div>
+            <InputField title="Friend Name" value={name} handleChange={(e) => setName(e.target.value)} placeholder="eg: John Deo" autofocus />
 
             <Button type="submit">
                 {friendId
