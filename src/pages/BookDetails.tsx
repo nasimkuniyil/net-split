@@ -240,6 +240,7 @@ export default function BookDetails() {
                             {whatsappMessage}
                         </pre>
                         <Button
+                            disabled={book.expenses.length == 0}
                             fullWidth
                             handleClick={() => {
                                 navigator.clipboard.writeText(whatsappMessage);

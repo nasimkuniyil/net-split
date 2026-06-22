@@ -1,4 +1,3 @@
-import { Trash2 } from "lucide-react";
 import Button from "../components/Button";
 import Tile from "../components/Tile";
 import ActionLink from "../components/ActionLink";
@@ -72,21 +71,23 @@ export default function Home() {
                                 >
 
                                     <ActionLink href={`/books/${b.id}`}>
-                                        <Tile title={b.name}>
-                                            <StatCard amount={b.expenses.reduce((sum, expense) => sum + expense.amount, 0)} />
-                                            <br />
-                                            <Button
-                                                fullWidth
-                                                handleClick={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
+                                        <div className="border border-emerald-200 rounded-lg">
+                                            <Tile title={b.name}>
+                                                <StatCard amount={b.expenses.reduce((sum, expense) => sum + expense.amount, 0)} />
+                                                <br />
+                                                <Button
+                                                    fullWidth
+                                                    handleClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
 
-                                                    deleteBook(b.id);
-                                                }}
-                                            >
-                                                Delete
-                                            </Button>
-                                        </Tile>
+                                                        deleteBook(b.id);
+                                                    }}
+                                                >
+                                                    Delete
+                                                </Button>
+                                            </Tile>
+                                        </div>
                                     </ActionLink>
                                 </div>
                             ))
