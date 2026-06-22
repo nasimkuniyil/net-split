@@ -1,4 +1,4 @@
-import { PenLine, Trash2, Users2 } from "lucide-react";
+import { Trash2, Users2 } from "lucide-react";
 import type { Expense } from "../types";
 
 interface ExpenseListProps {
